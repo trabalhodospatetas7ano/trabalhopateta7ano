@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontos Turísticos da Região</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .cidade {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cidade h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .ponto {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .ponto img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 3px solid transparent;
+        }
+
+        .ponto img:hover {
+            transform: scale(1.05);
+            border-color: #3498db;
+        }
+
+        .descricao {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .descricao h3 {
+            color: #3498db;
+            margin-bottom: 0.8rem;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .ponto {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ====== JANELA DE INFORMAÇÕES ====== */
+        .tela-info {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            padding: 30px 15px;
+            overflow-y: auto;
+        }
+
+        .conteudo-info {
+            background-color: #ffffff;
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            animation: surgir 0.4s ease;
+        }
+
+        @keyframes surgir {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .botao-fechar {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 32px;
+            color: #666;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .botao-fechar:hover {
+            color: #e74c3c;
+        }
+
+        .imagem-grande {
+            width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .titulo-info {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .texto-detalhado {
+            font-size: 16px;
+            color: #444;
+            line-height: 1.8;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pontos Turísticos da Nossa Região</h1>
+        <p>Conheça os lugares especiais que fazem parte da nossa história e beleza</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Martinópolis -->
+        <section class="cidade">
+            <h2>Martinópolis</h2>
+
+            <div class="ponto">
+                <img src="https://turismo.martinopolis.sp.gov.br/fotos/4e6773a207bfdbe2b6a7a9f98320d1fb-09-02-2023-10-29-04.jpg"
+                     alt="Paróquia Santa Bibiana"
+                     onclick="abrirTela(this.src, this.alt, 'A Paróquia Santa Bibiana é um dos mais importantes patrimônios religiosos e arquitetônicos de Martinópolis. Sua construção apresenta traços clássicos e imponentes, sendo um marco visual na cidade. É um espaço de grande devoção, onde acontecem as principais festas religiosas, casamentos e eventos da comunidade. O interior é ricamente decorado com detalhes artísticos que transmitem paz e espiritualidade, sendo também um dos cartões postais mais fotografados e admirados por moradores e visitantes.')">
+                <div class="descricao">
+                    <h3>Paróquia Santa Bibiana</h3>
+                    <p>Um dos pontos mais importantes da cidade, símbolo de fé e arquitetura.<br>
+                    Lugar de paz, tradição e respeito para toda a comunidade.<br>
+                    Palco das maiores festas e eventos religiosos da região.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/de/09/69/bela-paisagem-de-final.jpg?w=900&h=500&s=1"
+                     alt="Represa Laranja Doce"
+                     onclick="abrirTela(this.src, this.alt, 'A Represa Laranja Doce é uma das maiores e mais belas belezas naturais da região, encantando pela imensidão de suas águas calmas e cristalinas, cercadas por uma vasta área verde preservada. É o local preferido para a prática de pescaria, passeios de barco, caminhadas, piqueniques e dias de lazer em família. Conta com trilhas leves, quiosques e espaços para acampamento. O pôr do sol aqui é famoso: as cores douradas e alaranjadas refletem na água, criando um espetáculo visual inesquecível que atrai fotógrafos e amantes da natureza de todos os lugares.')">
+                <div class="descricao">
+                    <h3>Represa Laranja Doce</h3>
+                    <p>Uma paisagem de tirar o fôlego com águas calmas e muita natureza.<br>
+                    Ideal para pescaria, passeios ou apenas apreciar o pôr do sol.<br>
+                    Espaço amplo e agradável para toda a família curtir.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://conalsupercenter.com.br/wp-content/uploads/2025/10/DJI_20000101045705_0157_D-scaled.webp"
+                     alt="Conal Supercenter"
+                     onclick="abrirTela(this.src, this.alt, 'O Conal Supercenter é o principal centro comercial e de serviços de Martinópolis, sendo referência em toda a região por sua estrutura moderna e completa. Reúne em um só lugar lojas de diversos segmentos, supermercado, restaurantes, praça de alimentação e um amplo estacionamento. Mais do que um ponto de compras, ele é um verdadeiro ponto de encontro da comunidade, onde são realizados eventos, campanhas sociais e atividades culturais. O ambiente é organizado, seguro e muito bem cuidado, proporcionando conforto e praticidade para quem mora ou visita a cidade.')">
+                <div class="descricao">
+                    <h3>Conal Supercenter</h3>
+                    <p>Espaço moderno e completo, referência em serviços e comércio.<br>
+                    Ponto de encontro da comunidade com estrutura de alto padrão.<br>
+                    Ambiente seguro, organizado e agradável para todos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Presidente Prudente -->
+        <section class="cidade">
+            <h2>Presidente Prudente</h2>
+
+            <div class="ponto">
+                <img src="https://media-cdn.tripadvisor.com/media/photo-s/0b/82/c0/11/lindo-parque.jpg"
+                     alt="Parque do Povo"
+                     onclick="abrirTela(this.src, this.alt, 'Conhecido como o coração verde de Presidente Prudente, o Parque do Povo é o espaço público mais querido e movimentado da cidade. Possui uma extensa área com muitas árvores nativas, jardins bem cuidados, pistas para caminhada e corrida, academia ao ar livre e playgrounds para crianças. É palco de feiras livres, apresentações musicais, festivais e eventos comunitários que reúnem milhares de pessoas. É o lugar perfeito para relaxar, praticar esportes ou simplesmente sentar em um banco e apreciar a natureza bem no centro da cidade grande, proporcionando qualidade de vida e bem-estar a todos.')">
+                <div class="descricao">
+                    <h3>Parque do Povo</h3>
+                    <p>O coração verde da cidade, cheio de árvores e espaços abertos.<br>
+                    Locais para caminhar, praticar esportes e encontrar amigos.<br>
+                    Ambiente seguro e bem cuidado para lazer e eventos.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS78CG41FRAHBlD9Vq6jnZ8ON4hGeEBOwH0kQ&s"
+                     alt="Pruden Shopping"
+                     onclick="abrirTela(this.src, this.alt, 'O Pruden Shopping é o principal centro de compras, serviços e entretenimento da região de Presidente Prudente. Conta com mais de 100 lojas das principais marcas do mercado, uma praça de alimentação variada, cinema com salas modernas e confortáveis, parque de diversões e estacionamento coberto e seguro. É um ponto de encontro tradicional da população, onde além de fazer compras, as pessoas vão para passear, assistir filmes, comemorar datas especiais e participar de decorações e campanhas temáticas. Sua estrutura é climatizada e preparada para receber visitantes de todas as cidades vizinhas.')">
+                <div class="descricao">
+                    <h3>Pruden Shopping</h3>
+                    <p>O centro de compras e lazer mais completo da região.<br>
+                    Conta com lojas, cinema, praça de alimentação e diversão.<br>
+                    Ambiente moderno, seguro e confortável para toda família.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://turismodagente.com.br/wp-content/uploads/2023/01/Centro-Cultural-Matarazzo-4-800x600.jpg"
+                     alt="Centro Histórico Matarazzo"
+                     onclick="abrirTela(this.src, this.alt, 'O Centro Cultural Matarazzo é um verdadeiro tesouro histórico e arquitetônico, que preserva a memória e as origens de Presidente Prudente. O complexo de construções antigas, que no passado abrigou indústrias e residências, foi totalmente restaurado e hoje funciona como um espaço vivo de cultura e conhecimento. Abriga museus, galerias de arte, biblioteca, auditórios e exposições que contam a história da imigração, do desenvolvimento econômico e da evolução cultural da cidade. Caminhar por ali é fazer uma viagem no tempo, apreciando o estilo arquitetônico antigo e a preservação do patrimônio local.')">
+                <div class="descricao">
+                    <h3>Centro Histórico Matarazzo</h3>
+                    <p>Preserva a história da cidade em construções antigas e imponentes.<br>
+                    Conta museus, exposições e detalhes da nossa evolução.<br>
+                    Um passeio cultural que vale muito a pena conhecer.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/55/9e/3f/balneario-da-amizade.jpg?w=1200&h=-1&s=1"
+                     alt="Balneário da Amizade"
+                     onclick="abrirTela(this.src, this.alt, 'O Balneário da Amizade é um dos espaços de lazer mais tradicionais e queridos de Presidente Prudente, símbolo de diversão e encontro há gerações. Conta com uma vasta área verde com muita sombra, quiosques cobertos, churrasqueiras, restaurante, amplo estacionamento e instalações sanitárias de qualidade. É um ambiente familiar, seguro e muito bem cuidado, onde as pessoas vão para passar o dia, fazer festas, confraternizações e eventos ao ar livre. Possui também quadras esportivas e espaço amplo para atividades recreativas, sendo um patrimônio afetivo da população prudense.')">
+                <div class="descricao">
+                    <h3>Balneário da Amizade</h3>
+                    <p>Espaço tradicional de lazer com muita área verde e sombra.<br>
+                    Estrutura completa com quiosques, churrasqueiras e segurança.<br>
+                    Lugar perfeito para festas, passeios e confraternizações.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://s2-g1.glbimg.com/SK2AapLLkWpX4hjgWkySAgmUbbQ=/0x0:1030x580/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/3/A/dHZq0NS1K5T8wZW8FAGw/catedral-sao-sebastiao-2-pascom-diocesana.png"
+                     alt="Catedral de São Sebastião"
+                     onclick="abrirTela(this.src, this.alt, 'A Catedral de São Sebastião é o principal marco religioso e arquitetônico de Presidente Prudente, impressionando pela sua grandiosidade e beleza singular. Construída no estilo neogótico, suas torres altas e detalhes em pedra são visíveis de vários pontos da cidade. O interior é ricamente decorado com vitrais coloridos que retratam histórias bíblicas, altares esculpidos e pinturas sacras de valor inestimável. É a sede da Diocese e recebe milhares de fiéis, especialmente na festa do padroeiro, em janeiro, quando a cidade se enche de devoção, música e celebrações. É considerada uma das igrejas mais belas do interior paulista.')">
+                <div class="descricao">
+                    <h3>Catedral de São Sebastião</h3>
+                    <p>Imponente e bela, marco religioso e arquitetônico da cidade.<br>
+                    Arquitetura neogótica com vitrais e detalhes artísticos incríveis.<br>
+                    Lugar de fé, devoção e um dos cartões postais mais famosos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Presidente Epitácio -->
+        <section class="cidade">
+            <h2>Presidente Epitácio</h2>
+
+            <div class="ponto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRoxdXwB5eX7zxW7I6Jr47eYAjEbAJiZquJA&s"
+                     alt="Balneário Figueiral"
+                     onclick="abrirTela(this.src, this.alt, 'Localizado às margens do majestoso Rio Paraná, o Balneário Figueiral é o cartão postal do lazer em Presidente Epitácio. Suas águas são limpas, calmas e próprias para banho, cercadas por muita sombra de árvores centenárias que garantem frescor nos dias quentes. Conta com estrutura completa e bem conservada: quiosques com churrasqueira, restaurantes, banheiros, vestiários e segurança permanente. É o ponto de encontro preferido da comunidade nos finais de semana e feriados, onde todos se reúnem para curtir o rio, pescar ou apenas relaxar ouvindo o som das águas e da natureza.')">
+                <div class="descricao">
+                    <h3>Balneário Figueiral</h3>
+                    <p>Beira rio, águas próprias para banho e muita sombra natural.<br>
+                    Estrutura completa com quiosques, restaurantes e segurança.<br>
+                    Lugar tradicional para diversão e contato com o rio.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbZTr6QKqYA7t9uea7Z9_xuG95VNRfDR4e9g&s"
+                     alt="Orla Fluvial e Pier Turístico"
+                     onclick="abrirTela(this.src, this.alt, 'A Orla Fluvial e o Pier Turístico formam o cenário mais bonito e famoso de Presidente Epitácio, oferecendo uma vista privilegiada para o Rio Paraná. O espaço conta com um calçadão largo e bem iluminado, bancos confortáveis, jardins floridos e o píer que avança rio adentro, permitindo uma visão ainda mais ampla. É o lugar perfeito para caminhadas, passeios de bicicleta, encontros com amigos e principalmente para assistir ao pôr do sol, considerado um dos mais belos do Brasil. Dali partem também os barcos para passeios turísticos, e aos finais de semana acontecem apresentações artísticas e feiras de artesanato.')">
+                <div class="descricao">
+                    <h3>Orla Fluvial e Pier Turístico</h3>
+                    <p>Cartão postal da cidade com vista incrível para o Rio Paraná.<br>
+                    Calçadão largo, iluminação e lugar perfeito para o pôr do sol.<br>
+                    Passeios, eventos e momentos inesquecíveis a beira da água.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://www.turismo.presidenteepitacio.sp.gov.br/fotos/cb59216fbd8cb4b70e6880adc27fd5f0-29-07-2022-18-47-18.jpg"
+                     alt="Antiga Estação Ferroviária"
+                     onclick="abrirTela(this.src, this.alt, 'A Antiga Estação Ferroviária é um marco fundamental da história econômica e social de Presidente Epitácio. Construída no início do século XX, foi por ali que chegaram as famílias que colonizaram a região e por onde saíram as riquezas da terra que alavancaram o crescimento local. Hoje, totalmente restaurada e preservada, abriga o Museu Ferroviário e espaços culturais. O prédio mantém a arquitetura original, com telhado alto, janelas grandes e materiais típicos da época. Visitar a estação é entender como o transporte ferroviário foi vital para o nascimento e desenvolvimento da cidade.')">
+                <div class="descricao">
+                    <h3>Antiga Estação Ferroviária</h3>
+                    <p>Preserva a memória do tempo do trem e da colonização.<br>
+                    Arquitetura original e museu com peças históricas raras.<br>
+                    Importante espaço cultural e de aprendizado da nossa história.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/36/1a/38/por-do-sol-na-prainha.jpg?w=900&h=-1&s=1"
+                     alt="Parque da Orla"
+                     onclick="abrirTela(this.src, this.alt, 'O Parque da Orla é uma extensa área de lazer integrada à beira do Rio Paraná, muito bem projetada e cuidada para valorizar ao máximo a paisagem natural. Possui pistas de caminhada e ciclismo, quadras poliesportivas, academia ao ar livre, playground moderno e espaços gramados para descansar e piqueniques. Toda a sua extensão é arborizada com espécies nativas e conta com pontos de apoio e quiosques. É um espaço público de altíssima qualidade, que proporciona bem-estar à população e aos visitantes, sendo ideal para praticar exercícios ou simplesmente sentar e admirar a imensidão das águas.')">
+                <div class="descricao">
+                    <h3>Parque da Orla</h3>
+                    <p>Área de lazer bem cuidada e integrada à beira do rio.<br>
+                    Pistas, quadras, academia e muito espaço verde.<br>
+                    Lugar bonito, seguro e agradável para toda família.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://www.turismo.presidenteepitacio.sp.gov.br/fotos/392604d457ca5f437a2205849f29fdbe-29-07-2022-19-24-33.jpg"
+                     alt="Reserva Florestal do Córrego do Veado"
+                     onclick="abrirTela(this.src, this.alt, 'Uma das maiores e mais importantes áreas de preservação ambiental do estado, com mais de 10 milhões de metros quadrados de vegetação nativa intocada. Abriga o encontro de dois biomas importantes: a Mata Atlântica e o Cerrado, além de nascentes, córregos e uma fauna riquíssima com espécies raras e ameaçadas de extinção. Dentro da reserva existe também um sítio arqueológico com registros de povos indígenas que viveram na região há mais de 2 mil anos. É um passeio imperdível para quem ama natureza e história, mas deve ser visitado sempre acompanhado de guia credenciado para garantir a segurança e a conservação desse patrimônio único.')">
+                <div class="descricao">
+                    <h3>Reserva Florestal do Córrego do Veado</h3>
+                    <p>Grande área de preservação com Mata Atlântica e Cerrado.<br>
+                    Abriga fauna rara, nascentes e sítio arqueológico antigo.<br>
+                    Beleza natural única, visite com guia para conhecer tudo.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://www.turpresi.instarswe.com.br/imgeditor/5.jpg"
+                     alt="Mirante do Pôr do Sol"
+                     onclick="abrirTela(this.src, this.alt, 'Localizado no ponto geográfico mais alto da cidade, o Mirante do Pôr do Sol oferece uma visão panorâmica completa de 360 graus de toda a região e do majestoso Rio Paraná. É famoso mundialmente pela beleza incomparável do seu entardecer: quando o sol desce no horizonte, o céu se pinta de laranja, rosa, roxo e dourado, refletindo nas águas do rio e criando uma imagem inesquecível. Possui estrutura com calçada, guarda-corpo e iluminação, sendo seguro para visitação em qualquer horário. É parada obrigatória para turistas e o lugar preferido dos moradores para levar visitas.')">
+                <div class="descricao">
+                    <h3>Mirante do Pôr do Sol</h3>
+                    <p>O ponto mais alto com vista panorâmica de 360 graus.<br>
+                    Famoso mundialmente por ter um dos pores do sol mais lindos.<br>
+                    Lugar seguro e preparado para receber visitantes a qualquer hora.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pirapozinho -->
+        <section class="cidade">
+            <h2>Pirapozinho</h2>
+
+            <div class="ponto">
+                <img src="https://terraparque.tur.br/wp-content/uploads/2025/11/CACHOEIRA.jpg"
+                     alt="Cachoeira Noite Negra"
+                     onclick="abrirTela(this.src, this.alt, 'Uma verdadeira joia escondida em meio à natureza preservada de Pirapozinho, a Cachoeira Noite Negra é o principal ponto turístico natural da cidade. Possui belas quedas d`água e poços de águas cristalinas e extremamente geladas, perfeitos para refrescar nos dias quentes. O acesso é feito por uma trilha leve e sinalizada, cercada por mata fechada, árvores centenárias e o som constante da floresta. O nome curioso vem da sombra densa que as árvores fazem sobre a água, deixando o ambiente escuro, fresco e aconchegante. É um passeio tranquilo, ideal para famílias, amantes do ecoturismo e quem busca paz e contato com a natureza.')">
+                <div class="descricao">
+                    <h3>Cachoeira Noite Negra</h3>
+                    <p>Beleza natural escondida com águas cristalinas e geladas.<br>
+                    Quedas d'água e mata preservada em um ambiente tranquilo.<br>
+                    Lugar perfeito para banho, descanso e contato com a natureza.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPaOnmLXEdOJMwsW6lXb6noECe2zsLOr1kfA&s"
+                     alt="Pesqueiro Ferreira Mel"
+                     onclick="abrirTela(this.src, this.alt, 'Referência absoluta em lazer rural na região, o Pesqueiro Ferreira Mel é um espaço familiar e muito acolhedor, onde tradição e natureza caminham lado a lado. Possui vários tanques grandes abastecidos com peixes de diversas espécies, estrutura completa com restaurante que serve pratos deliciosos preparados com os peixes pescados no próprio local, lanchonete, estacionamento amplo e áreas gramadas para piquenique. É um lugar onde as pessoas vão para passar o dia todo, relaxar, pescar, comer bem e se divertir. O ambiente é muito verde, com espaço para crianças brincarem livremente e atendimento caloroso e simpático.')">
+                <div class="descricao">
+                    <h3>Pesqueiro Ferreira Mel</h3>
+                    <p>Referência em lazer rural e pescaria de qualidade.<br>
+                    Restaurante com comida deliciosa feita no próprio local.<br>
+                    Ambiente verde, familiar e muito aconchegante para passar o dia.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq6jUN6oT7yuodZv9DwtQxlzn0ld_VHswc-g&s"
+                     alt="Capela Santo Antônio"
+                     onclick="abrirTela(this.src, this.alt, 'Pequena, singela e extremamente cheia de histórias e significados, a Capela Santo Antônio é um patrimônio afetivo de toda a comunidade de Pirapozinho. Construída há mais de 70 anos com o trabalho e doações dos próprios moradores, ela fica localizada em uma área rural cercada de muito verde e tranquilidade. Sua arquitetura simples e rústica encanta pela beleza da simplicidade e da fé. É palco de uma das festas mais tradicionais e esperadas da cidade, realizada em junho, quando a comunidade se reúne para missas, leilões, comidas típicas e muita música. Representa a união e a cultura do povo da região.')">
+                <div class="descricao">
+                    <h3>Capela Santo Antônio</h3>
+                    <p>Pequena, simples e cheia de história e tradição.<br>
+                    Construída pela comunidade, símbolo de fé e união.<br>
+                    Ambiente de paz, muito verde e festas tradicionais em junho.</p>
+                </div>
+            </div>
+
+            <div class="ponto">
+                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/2e/30/0a/logo-na-entrada-encontramos.jpg?w=1200&h=-1&s=1"
+                     alt="História e Museu de Ensino Cacique Tibiriçá"
+                     onclick="abrirTela(this.src, this.alt, 'Um espaço fundamental para conhecer, valorizar e preservar as origens e a cultura da região. O Museu Cacique Tibiriçá conta e preserva a história da ocupação indígena, da chegada dos imigrantes e da evolução educacional e cultural de Pirapozinho ao longo dos anos. Seu acervo é riquíssimo e diversificado: conta com objetos antigos, ferramentas de trabalho, documentos raros, fotos históricas, peças de arte indígena e até mobiliário de antigas escolas. O nome homenageia o líder indígena que habitou essas terras. O espaço também desenvolve projetos educativos importantes.')">
+                <div class="descricao">
+                    <h3>Museu Cacique Tibiriçá</h3>
+                    <p>Guarda a memória, cultura e história da nossa terra.<br>
+                    Acervo rico com objetos indígenas, documentos e fotos antigas.<br>
+                    Importante espaço de aprendizado e valorização das nossas origens.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Conheça e valorize os lugares da nossa terra ❤️</p>
+    </footer>
+
+    <!-- ====== JANELA DE INFORMAÇÕES ====== -->
+    <div id="telaInformacao" class="tela-info">
+        <div class="conteudo-info">
+            <span class="botao-fechar" onclick="fecharTela()">&times;</span>
+            <h2 id="tituloLocal" class="titulo-info"></h2>
+            <img id="imagemGrande" class="imagem-grande" alt="">
+            <p id="textoDetalhado" class="texto-detalhado"></p>
+        </div>
+    </div>
+
+    <!-- ====== JAVASCRIPT ====== -->
+    <script>
+        const tela = document.getElementById('telaInformacao');
+        const titulo = document.getElementById('tituloLocal');
+        const imagem = document.getElementById('imagemGrande');
+        const texto = document.getElementById('textoDetalhado');
+
+        function abrirTela(srcImagem, altImagem, textoInfo) {
+            imagem.src = srcImagem;
+            imagem.alt = altImagem;
+            titulo.innerText = altImagem;
+            texto.innerText = textoInfo;
+            tela.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharTela() {
+            tela.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        tela.addEventListener('click', function(e) {
+            if (e.target === tela) {
+                fecharTela();
+            }
+        });
+    </script>
+
+</body>
+</html>
